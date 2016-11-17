@@ -1,0 +1,39 @@
+#!/bin/bash
+
+declare -A total
+declare -A aligned
+declare -A alignedafterfilter
+
+for i in $1/bam/*.bam;
+do
+ filename=${i##*/}
+ sample=${filename%.fastq*}
+ total[$sample]=`samtools view $i | wc -l`
+done
+for i in $1/bed/*.bam.bed;
+do
+ filename=${i##*/}
+ sample=${filename%.fastq*}
+ aligned[$sample]=`wc -l $i | awk '{print $1}'`
+done
+for i in $1/bed/*.bam.uniq.bed;
+do
+ filename=${i##*/}
+ sample=${filename%.fastq*}
+ alignedafterfilter[$sample]=`wc -l $i | awk '{print $1}'`
+done
+
+echo "<tab class=wikitable head=top>"
+echo -e "Sample \t Total Reads \t Aligned Reads \t After PCR filtering"
+for sample in "${!total[@]}";
+do
+  echo -n $sample
+  echo -ne " \t "
+  echo -n ${total["$sample"]}
+  echo -ne " \t "
+  echo -n ${aligned["$sample"]}
+  echo -ne " \t "
+  echo -n ${alignedafterfilter["$sample"]}
+  echo
+done
+echo "</tab>"

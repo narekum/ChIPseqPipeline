@@ -1,0 +1,120 @@
+  _____ _     _____ _____                         _____ _____ _____  ______ _      _____ _   _ ______
+ / ____| |   |_   _|  __ \                       |  __ \_   _|  __ \|  ____| |    |_   _| \ | |  ____|
+| |    | |__   | | | |__) |_____ ___  ___  __ _  | |__) || | | |__) | |__  | |      | | |  \| | |__
+| |    | ._ \  | | |  ___/______/ __|/ _ \/ _` | |  ___/ | | |  ___/|  __| | |      | | | . ` |  __|
+| |____| | | |_| |_| |          \__ \  __/ (_| | | |    _| |_| |    | |____| |____ _| |_| |\  | |____
+ \_____|_| |_|_____|_|          |___/\___|\__, | |_|   |_____|_|    |______|______|_____|_| \_|______|
+                                             | | 
+                                             |_| bowtie2, Fastqc, samtools 
+
+
+
+  Institute of Cancer Sciences
+  Epigenetics Unit
+  University of Glasgow
+  Garscube Estate
+  Glasgow G61 1QH
+
+  Report bugs to narekum@gmail.com or narendra.kumar@glasgow.ac.uk
+
+  Copyright 2016 Narendra Kumar
+
+  This program is free software; you can redistribute it and/or modify 
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation; version 3 of the License.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of 
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+  GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with this program; if not, see <http://www.gnu.org/licenses/>
+  or write to the Free Software Foundation, Inc., 51 Franklin Street,
+  Fifth Floor, Boston, MA 02110-1301, USA.
+
+  Python scripts bedToBedGraph.py and extendbed were written by Tony McBryan.
+
+  ==============================================================================
+
+  *Prerequisite
+
+  Install the following programs on your system
+
+  1. Bowtie2 Fast and sensitive read alignment
+     http://bowtie-bio.sourceforge.net/bowtie2/index.shtml
+
+  2. FASTQC
+     http://www.bioinformatics.babraham.ac.uk/projects/fastqc/
+
+  3. SAMtools
+     http://samtools.sourceforge.net/
+
+  4. bedtools: a powerful toolset for genome arithmetic
+     http://bedtools.readthedocs.io/en/latest/index.html
+
+  5. Following programs from UCSCtools
+     http://hgdownload.cse.ucsc.edu/admin/exe/linux.x86_64/ (for 64 bit linux)
+     fetchChromSizes
+     bedGraphToBigWig
+     
+
+  *Installation
+
+  1. To install ChIP-seq pipeline, untar the package at your favorite place.
+
+  2. Change the value of variables in lines from 83 to 91 to the appropriate 
+     location of the program on your system  
+
+     Make sure you set the path to the index files of the genomes for 
+     bowtie2. You may download from the following locations.
+
+     http://bowtie-bio.sourceforge.net/bowtie2/index.shtml
+     http://support.illumina.com/sequencing/sequencing_software/igenome.html
+
+  You can now start using by giving the full path of the perl script
+
+  perl <full path to parent directory>/bin/bowtie2Pipeline.pl <options>
+
+  You may make an alias of executable as use it from anywhere without having 
+  to write full path
+
+  Add following line in your ~/.bashrc file 
+
+  alias bowtie2Pipeline="<full path to parent directory>/ChIPseq_Pipeline/bin/bowtie2Pipeline.pl"
+
+
+  *User manual
+
+  Usage: bowtie2Pipeline.pl < --dir MAPDIRECTORY --species SPECIES --quals QUALS > [Options]
+
+  Options:
+
+    -h, --help       Show this help message.
+
+    -d, --dir        directory where sequences are kept  (required)
+
+    -s, --species    species e.g. hg19  (required)
+
+    -q, --quals      quals (required)
+                     available quals: phred33-quals
+                                      phred64-quals
+                                      solexa-quals
+                                      solexa1.3-quals
+                                      integer-quals
+    -t, --threads    number of processors to be used (default 2)
+
+    -e, --extra      extra bowtie options enclosed in quote ""
+
+    -z, --zip        zip the fastq files after the run y=yes; n=no (default y)
+
+    -i, --insertsize extend the reads to this length (default 150)
+
+  Examples:
+  $ perl bowtie2Pipeline.pl --dir mapdirectory --species hg19 --quals phred33-quals
+  \or\
+  $ perl bowtie2Pipeline.pl  -d mapdirectory -s hg19 -q phred33-quals -t 8 -z n -i 150
+
+
+###############################################################################
+                        * END OF THE FILE *
